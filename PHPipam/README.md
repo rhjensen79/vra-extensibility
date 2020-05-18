@@ -14,7 +14,7 @@ but it was not my usecase for this.
 This should be easely done, by chaging the script, and api call, and make it a blocking task in VRA.
 
 Here is an example of the end resoult, if everything is working as it should :-) 
-![End Result](PHPipam/Screenshoots/End_Result.png)
+![End Result](https://github.com/rhjensen79/vra-extensibility/blob/master/PHPipam/Screenshoots/End_Result.png)
 
 ## Links
 [PHPipam offical site](https://phpipam.net)
