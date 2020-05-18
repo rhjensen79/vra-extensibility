@@ -57,7 +57,7 @@ I have created a cusom field, that i polulate, from the VM deployment.
 It's required today, or else the script will fail. 
 The idea behind this, is to have an app id input, for every request, so all applications can 
 be easely tracket. This is created, with inspiration from a real customer usecase. 
-![Custom Settings](https://github.com/rhjensen79/PHPipam/blob/master/Screenshoots/Custom_Field.png)
+![Custom Settings](https://github.com/rhjensen79/vra-extensibility/blob/master/PHPipam/Screenshoots/Custom_Field.png)
 
 
 ## Quick Guide
