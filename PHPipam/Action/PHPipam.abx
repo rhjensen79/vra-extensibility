@@ -1,0 +1,16 @@
+---
+exportVersion: "1"
+exportId: "8a5e190d7126deca0171bb1a1eb87907"
+name: "PHPipam"
+runtime: "python"
+entrypoint: "phpipam"
+inputs:
+  target: "World"
+timeoutSeconds: 180
+deploymentTimeoutSeconds: 600
+dependencies: "requests"
+actionType: "SCRIPT"
+provider: "on-prem"
+configuration:
+  const_azure-system_managed_identity: false
+memoryInMB: 300

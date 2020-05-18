@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  phpipam-web:
+    image: phpipam/phpipam-www:latest
+    ports:
+      - "80:80"
+    environment:
+      - TZ=Europe/Copenhagen
+      - IPAM_DATABASE_HOST=phpipam-mariadb
+      - IPAM_DATABASE_PASS=!!!Pass!!!
+      - IPAM_DATABASE_WEBHOST=%
+    restart: unless-stopped
+    volumes:
+      - phpipam-www-data:/phpipam
+    depends_on:
+      - phpipam-mariadb
+
+  phpipam-cron:
+    image: phpipam/phpipam-cron:latest
+    environment:
+      - TZ=Europe/Copenhagen
+      - IPAM_DATABASE_HOST=phpipam-mariadb
+      - IPAM_DATABASE_PASS=!!!Pass!!!
+      - SCAN_INTERVAL=5m
+    restart: unless-stopped
+    depends_on:
+      - phpipam-mariadb
+
+  phpipam-mariadb:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=!!!Pass!!!
+    restart: unless-stopped
+    volumes:
+      - phpipam-db-data:/var/lib/mysql
+
+volumes:
+  phpipam-www-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=!!!NFS_FQDN!!!,rw
+      device: ":/phpipam-wwww"
+  phpipam-db-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=!!!NFS_FQDN!!!,rw
+      device: ":/phpipam"
