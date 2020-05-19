@@ -1,8 +1,12 @@
 import winrm
 
 #Global Variables
-event         = ""                                          #Provision or remove.
-hostname      = ""                                          #Cleaned up Hostname
+event              = ""                                          #Provision or remove.
+hostname           = ""                                          #Cleaned up Hostname
+domain_controller  = ""                                          #Domain controller FQDN
+OU                 = ""                                          #OU Where to place the computer in format CN=xxx,DC=xxx,DC=xxx
+Username           = ""                                          #Username with right to do the operation
+Password           = ""                                          #Password for the account" 
 
 #Get inputs from deployment
 def get_vm_input(context, inputs):
@@ -17,18 +21,18 @@ def get_vm_input(context, inputs):
 def handler(context, inputs):
     get_vm_input(context, inputs)
     #Open session
-    session = winrm.Session('hostname', auth=('username','password'))
+    session = winrm.Session(domain_controller, auth=(Username,Password))
     
     #Check for provision
     result = event.startswith('compute.provision')
     if result == True :
-      dns_command = "dsadd computer cn="+hostname+",CN=Computers,DC=cmplab,DC=dk"
+      dns_command = "dsadd computer cn="+hostname+","+OU+""
       result = session.run_ps(dns_command)
       print(result.std_out)
 
     #Check for removal
     result = event.startswith('compute.removal')
     if result == True :
-      dns_command = "dsrm cn="+hostname+",CN=Computers,DC=cmplab,DC=dk -noprompt"
+      dns_command = "dsrm cn="+hostname+","+OU+" -noprompt"
       result = session.run_ps(dns_command)
       print(result.std_out)
