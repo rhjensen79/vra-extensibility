@@ -4,7 +4,7 @@ A collection of Scripts, workflows etc. that i use, to extend VMware vRealize Au
 Feel free to use, but note that they are ment for inspiration, and test, and may not be production ready. 
 
 ## Everything here, can also be found on code.vmware.com in the Sample Exchange. 
-##    - - - If you create smething cool, then remember to share - - - 
+## If you create smething cool, then remember to share
 
 If you have good ideas for new usecases, please let me know. 
 
