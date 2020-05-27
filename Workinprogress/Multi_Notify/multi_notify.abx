@@ -1,0 +1,17 @@
+---
+exportVersion: "1"
+exportId: "8a5ec6257223a283017255c007f260d8"
+name: "multi_notify"
+runtime: "python"
+entrypoint: "handler"
+inputs:
+  slack_webhook: ""
+  notificationtype: ""
+timeoutSeconds: 180
+deploymentTimeoutSeconds: 600
+dependencies: "requests"
+actionType: "SCRIPT"
+provider: "on-prem"
+configuration:
+  const_azure-system_managed_identity: false
+memoryInMB: 300
