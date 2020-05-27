@@ -2,7 +2,10 @@ import requests
 import json
 
 #Global Variables
+telegram_token      = ""                                            #Telegram Token
+telegram_chatid     = ""                                            #Telegram gorup id
 slack_webhook       = ""                                            #Slack Webhook
+telegram_token      = ""                                            #Telegram Token
 ipadress            = ""                                            #Cleaned up IP
 hostname            = ""                                            #Cleaned up Hostname
 owner               = ""                                            #The requester of the ressource
@@ -17,8 +20,12 @@ def get_vm_input(context, inputs):
     global owner
     global notificationtype
     global image
+    global telegram_token
+    global telegram_chatid
     
     slack_webhook       = inputs["slack_webhook"]    
+    telegram_token      = str(inputs["telegram_token"])
+    telegram_chatid     = str(inputs["telegram_chatid"])    
     ip_raw              = inputs["addresses"]                         #Raw IP input
     ipadress            = str(ip_raw[0])[2:-2]                        #Cleaned up IP
     hostname_raw        = inputs["resourceNames"]                     #Raw Hostname
@@ -45,7 +52,11 @@ def notify_slack():
 
 #def notify_teams():
 
-#def notify_telegram():
+def notify_telegram():
+  url = "https://api.telegram.org/bot"+telegram_token+"/sendMessage?chat_id="+telegram_chatid+"&text="+owner+"\nyour "+image+" image is ready\nName : "+hostname+"\nIpadress : "+ipadress
+  payload = {}
+  headers= {}
+  response = requests.request("GET", url, headers=headers, data = payload)
 
    
 #Main Function

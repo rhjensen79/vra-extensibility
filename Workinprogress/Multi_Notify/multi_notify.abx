@@ -6,6 +6,8 @@ runtime: "python"
 entrypoint: "handler"
 inputs:
   slack_webhook: ""
+  telegram_token: ""
+  telegram_chatid: 
   notificationtype: ""
 timeoutSeconds: 180
 deploymentTimeoutSeconds: 600
