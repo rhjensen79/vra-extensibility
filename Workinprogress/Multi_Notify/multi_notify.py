@@ -1,5 +1,7 @@
 import requests
 import json
+import smtplib
+import ssl
 
 #Global Variables
 telegram_token      = ""                                            #Telegram Token
@@ -11,6 +13,11 @@ hostname            = ""                                            #Cleaned up 
 owner               = ""                                            #The requester of the ressource
 notificationtype    = ""                                            #The Type of notification  
 image               = ""                                            #Image deployed
+smtp_port           = ""                                            #smtp port 465 for SSL
+smtp_sender_email   = ""                                            #The senders email
+smtp_server         = ""                                            #The smtp server
+smtp_username       = ""                                            #Username
+smtp_password       = ""                                            #Password
 
 #Get inputs from deployment
 def get_vm_input(context, inputs):
@@ -22,10 +29,20 @@ def get_vm_input(context, inputs):
     global image
     global telegram_token
     global telegram_chatid
+    global smtp_port
+    global smtp_sender_email
+    global smtp_server
+    global smtp_username
+    global smtp_password
     
     slack_webhook       = inputs["slack_webhook"]    
     telegram_token      = str(inputs["telegram_token"])
-    telegram_chatid     = str(inputs["telegram_chatid"])    
+    telegram_chatid     = str(inputs["telegram_chatid"]) 
+    smtp_port           = inputs["smtp_port"]
+    smtp_sender_email   = str(inputs["smtp_sender_email"]) 
+    smtp_server         = str(inputs["smtp_server"]) 
+    smtp_username       = str(inputs["smtp_username"]) 
+    smtp_password       = str(inputs["smtp_password"]) 
     ip_raw              = inputs["addresses"]                         #Raw IP input
     ipadress            = str(ip_raw[0])[2:-2]                        #Cleaned up IP
     hostname_raw        = inputs["resourceNames"]                     #Raw Hostname
@@ -35,14 +52,23 @@ def get_vm_input(context, inputs):
     image               = str(inputs ["customProperties"]["image"])   #Needs error handling
 
 
-#def notify_email():
+def notify_email():
+    #Generate message
+    subject = "VRA Deployment Notification"
+    text = owner + " your " + image + " image is ready with name : " + hostname + " and Ipadress : " + ipadress
+    message = 'Subject: {}\n\n{}'.format(subject, text)
+    #Send Message
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
+        server.login(smtp_username, smtp_password)    
+        server.sendmail(smtp_sender_email, owner, message)
+        server.quit()
+
 
 def notify_slack():
     #Build the message
     text = "#VRA : " + owner + " your " + image + " image is ready with name : " + hostname + " and Ipadress : " + ipadress
-    
     slack_data = {'text': text}
-    
     #Post message
     response = requests.post(
     slack_webhook, data=json.dumps(slack_data),
@@ -53,12 +79,12 @@ def notify_slack():
 #def notify_teams():
 
 def notify_telegram():
-  url = "https://api.telegram.org/bot"+telegram_token+"/sendMessage?chat_id="+telegram_chatid+"&text="+owner+"\nyour "+image+" image is ready\nName : "+hostname+"\nIpadress : "+ipadress
-  payload = {}
-  headers= {}
-  response = requests.request("GET", url, headers=headers, data = payload)
+    url = "https://api.telegram.org/bot"+telegram_token+"/sendMessage?chat_id="+telegram_chatid+"&text="+owner+"\nyour "+image+" image is ready\nName : "+hostname+"\nIpadress : "+ipadress
+    payload = {}
+    headers= {}
+    response = requests.request("GET", url, headers=headers, data = payload)
 
-   
+
 #Main Function
 def handler(context, inputs):
     get_vm_input(context, inputs)
