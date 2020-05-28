@@ -10,6 +10,11 @@ Currently it's working for the following platforms.
 - Telegram
 - Ms Teams
 
+Currently it's working, by manualily defining whick kind of notification you want. 
+on my todo list is
+- Input from blueprint, to chose notification method
+- Error handling
+
 Let me know if more are needed, and if you are able to help. 
 
 ## Pre-requisites
