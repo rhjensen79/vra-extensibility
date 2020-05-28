@@ -1,6 +1,6 @@
 # Multi Notify
 
-A development, from the Slack notification action.
+An upgrade, from the Slack notification action.
 The idea here, is to have one action, that support notifications in as many different platforms, as possible.
 
 Currently it's working for the following platforms.
@@ -26,6 +26,9 @@ Required inputs (for the message type you want to use).
 - smtp_password
 - teams_webhook
 
+## Dependency
+- requests
+
 ### Telegram
 - Create bot (type /newbot @BotFather) and save token.
 - Create group
@@ -36,6 +39,7 @@ More info can be found here : https://core.telegram.org/api
 ### Email
 Email have been tested with AWS Simple Email service, but should work with 
 all smtp servers. 
+Guide on how to setup will come later.
 
 ### MS Teams
 Add an incoming webhook to a Teams channel:
@@ -45,3 +49,7 @@ Add an incoming webhook to a Teams channel:
 - Select the Configure button, provide a name, and, optionally, upload an image avatar for your webhook.
 - The dialog window will present a unique URL that will map to the channel. Make sure that you copy and save the URL—you will need to provide it to the outside service.
 - Select the Done button. The webhook will be available in the team channel.
+
+### Slack
+- Create Slack webhook. 
+link etc will come later. 
