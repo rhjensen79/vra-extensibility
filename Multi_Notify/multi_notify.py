@@ -105,3 +105,8 @@ def handler(context, inputs):
       notify_teams()
     if notificationtype == "telegram" :                                             
       notify_telegram()
+    if notificationtype == "all" : 
+      notify_email()
+      notify_slack()
+      notify_teams()
+      notify_telegram()
