@@ -18,6 +18,7 @@ smtp_sender_email   = ""                                            #The senders
 smtp_server         = ""                                            #The smtp server
 smtp_username       = ""                                            #Username
 smtp_password       = ""                                            #Password
+teams_webhook       = ""                                            #MS Teams Webhook
 
 #Get inputs from deployment
 def get_vm_input(context, inputs):
@@ -34,6 +35,7 @@ def get_vm_input(context, inputs):
     global smtp_server
     global smtp_username
     global smtp_password
+    global teams_webhook
     
     slack_webhook       = inputs["slack_webhook"]    
     telegram_token      = str(inputs["telegram_token"])
@@ -43,6 +45,7 @@ def get_vm_input(context, inputs):
     smtp_server         = str(inputs["smtp_server"]) 
     smtp_username       = str(inputs["smtp_username"]) 
     smtp_password       = str(inputs["smtp_password"]) 
+    teams_webhook       = str(inputs["teams_webhook"]) 
     ip_raw              = inputs["addresses"]                         #Raw IP input
     ipadress            = str(ip_raw[0])[2:-2]                        #Cleaned up IP
     hostname_raw        = inputs["resourceNames"]                     #Raw Hostname
@@ -76,7 +79,13 @@ def notify_slack():
     )
 
 
-#def notify_teams():
+def notify_teams():
+    payload = "{\n\t\"text\" : \""+owner+" your "+image+" is ready with Name : "+hostname+" and Ipadress : "+ipadress+" \"\n}"
+    headers = {
+      'Content-Type': 'text/plain'
+    }
+    response = requests.request("POST", teams_webhook, headers=headers, data = payload)
+
 
 def notify_telegram():
     url = "https://api.telegram.org/bot"+telegram_token+"/sendMessage?chat_id="+telegram_chatid+"&text="+owner+"\nyour "+image+" image is ready\nName : "+hostname+"\nIpadress : "+ipadress
