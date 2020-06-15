@@ -1,0 +1,4 @@
+      cloudConfig: |
+         runcmd:
+        #Add Public Github key to Autorized_keys
+         - curl https://github.com/'${self.github}'.keys >> /root/.ssh/authorized_keys
