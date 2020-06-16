@@ -22,7 +22,8 @@ unless you specify it in the blueprint.
 ### Extensibility
 
 1. Create a action, with the content from public_key.py
-2. Create a subscription, for projects you want to use, with 
+2. Add the requesters email and github username, to the users list, to match requester, with github username. 
+3. Create a subscription, for projects you want to use, with 
 Event Topic : Compute Alloation
 Blocking : Enabled
 
