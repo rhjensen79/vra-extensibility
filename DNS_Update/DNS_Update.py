@@ -1,3 +1,8 @@
+"""
+The purpose of this script, is to take VM input, and using WinRM connect to a Windows DNS server, 
+and update/remove the DNS record, using the dnscmd.exe command.
+"""
+
 import winrm
 
 #Global Variables

@@ -1,3 +1,8 @@
+"""
+The purpose of this script, is to take VM input, and using WinRM connect to a Windows Active Directory host, 
+and update/remove the compute record, using the dsadd or dsrm command.
+"""
+
 import winrm
 
 #Global Variables
