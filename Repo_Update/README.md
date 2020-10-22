@@ -23,4 +23,13 @@ The following variables must be setup in code Stream
 
 ## Git trigger
 
-Guide will follow soon.
+- Make sure you have setup a git Endpoint first, for the Repo you want to use.
+
+- Go to Git -> Webhooks for Git
+- Select New
+- Mine looks like this. The Secret token is gerated, from the UI. And for API token, i'm using my previus setup secret variable like this : ${var.Github_Token}
+- I have also setup a REGEX, containing .yaml, to only trigger whe i make changed to .yaml files. But it's up to you, if you want to do the same.
+- Pipeline is offcourse the importet Repo Update pipeline, from earlier.  
+![ID](https://github.com/rhjensen79/vra-extensibility/blob/master/Repo_Update/Screenshoots/git_trigger.png)
+
+If everyting is setup correct, then you will see, that everytime you do a comit, to your Github repo, and change .yaml files, then the sync will happen automaticly, and you won't have to wait for it to happen, like before.
