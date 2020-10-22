@@ -14,10 +14,28 @@ Currently it's working, by manualily defining whick kind of notification you wan
 on my todo list is
 - Input from blueprint, to chose notification method
 - Error handling
+- change to apprise plugin
 
 Let me know if more are needed, and if you are able to help. 
 
 ## Pre-requisites
+
+## Blueprint
+In my blueprints, i have a input that looks like this : 
+
+```notify:
+    type: boolean
+    description: Notify when deployment is finished
+    default: true
+    title: Notify
+```
+
+And in each VM, where i wan't notification i have the following :
+```
+notify: '${input.notify}'
+```
+
+Note this can be a static value, if you want to be notified everytime, without allowing the user to select it. 
 
 ## Inputs
 Required inputs (for the message type you want to use).

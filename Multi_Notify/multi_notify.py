@@ -4,6 +4,7 @@ import smtplib
 import ssl
 
 #Global Variables
+notify              = "false"                                       #Default Notify true/false
 telegram_token      = ""                                            #Telegram Token
 telegram_chatid     = ""                                            #Telegram gorup id
 slack_webhook       = ""                                            #Slack Webhook
@@ -22,6 +23,7 @@ teams_webhook       = ""                                            #MS Teams We
 
 #Get inputs from deployment
 def get_vm_input(context, inputs):
+    global notify
     global slack_webhook
     global ipadress
     global hostname
@@ -37,6 +39,8 @@ def get_vm_input(context, inputs):
     global smtp_password
     global teams_webhook
     
+    if 'notify' in inputs["customProperties"]:
+      notify            = inputs["customProperties"]["notify"]
     slack_webhook       = inputs["slack_webhook"]    
     telegram_token      = str(inputs["telegram_token"])
     telegram_chatid     = str(inputs["telegram_chatid"]) 
@@ -97,16 +101,14 @@ def notify_telegram():
 #Main Function
 def handler(context, inputs):
     get_vm_input(context, inputs)
-    if notificationtype == "email" :                                             
-      notify_email()
-    if notificationtype == "slack" :                                             
-      notify_slack()
-    if notificationtype == "teams" :                                             
-      notify_teams()
-    if notificationtype == "telegram" :                                             
-      notify_telegram()
-    if notificationtype == "all" : 
-      notify_email()
-      notify_slack()
-      notify_teams()
-      notify_telegram()
+    if notify == "true":
+      if notificationtype == "email" :                                             
+        notify_email()
+      if notificationtype == "slack" :                                             
+        notify_slack()
+      if notificationtype == "teams" :                                             
+        notify_teams()
+      if notificationtype == "telegram" :                                             
+        notify_telegram()
+    else:
+      print ("No Notification since Notify = ",notify)
