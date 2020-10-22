@@ -23,7 +23,8 @@ Let me know if more are needed, and if you are able to help.
 ## Blueprint
 In my blueprints, i have a input that looks like this : 
 
-```notify:
+```
+notify:
     type: boolean
     description: Notify when deployment is finished
     default: true
