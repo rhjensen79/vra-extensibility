@@ -1,6 +1,7 @@
 # Repo Update
 
-Code Stream pipeline, to auto sync Gitub repositories, when a comit is made to that repo
+Code Stream pipeline, to auto sync Gitub repositories, when a comit is made to that repo, instead of waiting 15 minutes for a achelduled sync.
+![ID](https://github.com/rhjensen79/vra-extensibility/blob/master/Repo_Update/Screenshoots/pipeline.png)
 
 ## Pre-requisites
 
