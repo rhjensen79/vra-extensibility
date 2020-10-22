@@ -1,0 +1,94 @@
+---
+project: Demo
+kind: PIPELINE
+name: Repo update
+enabled: true
+description: Git pull etc. on repo update
+concurrency: 1
+workspace:
+  endpoint: ''
+  image: ''
+  registry: ''
+  path: ''
+  autoCloneForTrigger: true
+  limits:
+    cpu: 1.0
+    memory: 512
+stageOrder:
+- Get token
+- Blueprints
+- ABX
+stages:
+  Blueprints:
+    taskOrder:
+    - Sync DK Blueprints,Sync Demo Blueprints,Sync Marketing Blueprints
+    tasks:
+      Sync Marketing Blueprints:
+        type: REST
+        input:
+          action: post
+          url: https://api.mgmt.cloud.vmware.com/content/api/sourcecontrol/sync-requests
+          headers:
+            Accept: application/json
+            Content-Type: application/json
+            Authorization: Bearer ${Get token.Get bearer token.output.responseBody.token}
+          payload: |-
+            {
+              "sourceId": "Replace"
+            }
+      Sync Demo Blueprints:
+        type: REST
+        input:
+          action: post
+          url: https://api.mgmt.cloud.vmware.com/content/api/sourcecontrol/sync-requests
+          headers:
+            Accept: application/json
+            Content-Type: application/json
+            Authorization: Bearer ${Get token.Get bearer token.output.responseBody.token}
+          payload: |-
+            {
+              "sourceId": "Replace"
+            }
+      Sync DK Blueprints:
+        type: REST
+        input:
+          action: post
+          url: https://api.mgmt.cloud.vmware.com/content/api/sourcecontrol/sync-requests
+          headers:
+            Accept: application/json
+            Content-Type: application/json
+            Authorization: Bearer ${Get token.Get bearer token.output.responseBody.token}
+          payload: |-
+            {
+              "sourceId": "Replace"
+            }
+  ABX:
+    taskOrder:
+    - Sync Demo ABX
+    tasks:
+      Sync Demo ABX:
+        type: REST
+        input:
+          action: post
+          url: https://api.mgmt.cloud.vmware.com/content/api/sourcecontrol/sync-requests
+          headers:
+            Accept: application/json
+            Content-Type: application/json
+            Authorization: Bearer ${Get token.Get bearer token.output.responseBody.token}
+          payload: |-
+            {
+              "sourceId": "Replace"
+            }
+  Get token:
+    taskOrder:
+    - Get bearer token
+    tasks:
+      Get bearer token:
+        type: REST
+        input:
+          action: post
+          url: https://api.mgmt.cloud.vmware.com/iaas/api/login
+          headers:
+            Accept: application/json
+            Content-Type: application/json
+          payload: "{\n\t\"refreshToken\": \"${var.vra_api_token}\"\n}\n\n"
